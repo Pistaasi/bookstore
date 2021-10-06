@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class bookEntity {
@@ -13,6 +17,11 @@ public class bookEntity {
 	private String title, author, isbn;
 	private int year;
 	private Double price;
+
+	@ManyToOne
+	@JoinColumn(name = "categoryid")
+	@JsonManagedReference
+	private Category category;
 
 	public bookEntity() {
 	}
@@ -24,6 +33,24 @@ public class bookEntity {
 		this.isbn = isbn;
 		this.year = year;
 		this.price = price;
+	}
+
+	public bookEntity(String title, String author, String isbn, int year, Double price, Category category) {
+		super();
+		this.title = title;
+		this.author = author;
+		this.isbn = isbn;
+		this.year = year;
+		this.price = price;
+		this.category = category;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	public Long getId() {
